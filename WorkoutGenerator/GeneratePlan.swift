@@ -36,7 +36,8 @@ struct GeneratePlan: View {
             label: {
                 Text(workout.rawValue)
                     .frame(width: 100, height: 100)
-                    .background(Color.pink)
+                    .foregroundColor(.black)
+                    .background(Color(cgColor: .init(gray: 0.8, alpha: 1)))
             })
     }
     

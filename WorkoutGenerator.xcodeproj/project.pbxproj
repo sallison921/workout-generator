@@ -15,6 +15,8 @@
 		266D7C6C2AB8E85200EF1C25 /* WorkoutSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266D7C6B2AB8E85200EF1C25 /* WorkoutSheet.swift */; };
 		266D7C6E2AB8E8B000EF1C25 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266D7C6D2AB8E8B000EF1C25 /* Model.swift */; };
 		266D7C702AB8EB2E00EF1C25 /* SavedWorkouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266D7C6F2AB8EB2E00EF1C25 /* SavedWorkouts.swift */; };
+		D71D43AA2BFD2BB600C4ED93 /* PreviewWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71D43A92BFD2BB600C4ED93 /* PreviewWorkoutView.swift */; };
+		D71D43AD2BFD536900C4ED93 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = D71D43AC2BFD536900C4ED93 /* Lottie */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,7 @@
 		266D7C6B2AB8E85200EF1C25 /* WorkoutSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSheet.swift; sourceTree = "<group>"; };
 		266D7C6D2AB8E8B000EF1C25 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		266D7C6F2AB8EB2E00EF1C25 /* SavedWorkouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedWorkouts.swift; sourceTree = "<group>"; };
+		D71D43A92BFD2BB600C4ED93 /* PreviewWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewWorkoutView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D71D43AD2BFD536900C4ED93 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +71,7 @@
 				266D7C6D2AB8E8B000EF1C25 /* Model.swift */,
 				266D7C5D2AB8E70A00EF1C25 /* Assets.xcassets */,
 				266D7C5F2AB8E70A00EF1C25 /* Preview Content */,
+				D71D43A92BFD2BB600C4ED93 /* PreviewWorkoutView.swift */,
 			);
 			path = WorkoutGenerator;
 			sourceTree = "<group>";
@@ -95,6 +100,9 @@
 			dependencies = (
 			);
 			name = WorkoutGenerator;
+			packageProductDependencies = (
+				D71D43AC2BFD536900C4ED93 /* Lottie */,
+			);
 			productName = WorkoutGenerator;
 			productReference = 266D7C562AB8E70700EF1C25 /* WorkoutGenerator.app */;
 			productType = "com.apple.product-type.application";
@@ -123,6 +131,9 @@
 				Base,
 			);
 			mainGroup = 266D7C4D2AB8E70700EF1C25;
+			packageReferences = (
+				D71D43AB2BFD536900C4ED93 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = 266D7C572AB8E70700EF1C25 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -151,6 +162,7 @@
 			files = (
 				266D7C6C2AB8E85200EF1C25 /* WorkoutSheet.swift in Sources */,
 				266D7C702AB8EB2E00EF1C25 /* SavedWorkouts.swift in Sources */,
+				D71D43AA2BFD2BB600C4ED93 /* PreviewWorkoutView.swift in Sources */,
 				266D7C5C2AB8E70700EF1C25 /* HomeScreen.swift in Sources */,
 				266D7C5A2AB8E70700EF1C25 /* WorkoutGeneratorApp.swift in Sources */,
 				266D7C6E2AB8E8B000EF1C25 /* Model.swift in Sources */,
@@ -360,6 +372,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D71D43AB2BFD536900C4ED93 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.4.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D71D43AC2BFD536900C4ED93 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D71D43AB2BFD536900C4ED93 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 266D7C4E2AB8E70700EF1C25 /* Project object */;
 }
