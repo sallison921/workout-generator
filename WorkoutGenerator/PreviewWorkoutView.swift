@@ -9,18 +9,25 @@ import Foundation
 import SwiftUI
 import Lottie
 
+/// View to show the proposed generated workout
+/// Allows a user to see the workout and replace exercises and/or save the workout to their list
 struct PreviewWorkoutView: View {
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
     let defaults = UserDefaults.standard
-    
+    /// view model
+    @Environment(Model.self) var model
+    /// Indicates whether to show the loading animation overlay
     @State var showLoading: Bool = false
     
-    @Environment(Model.self) var model
+    /// the type of workout to be generated
     let workoutType: WorkoutType
+    /// the generated workout
     @State var workout: Workout?
     
+    /// Indicates which exercise the user is editing
     @State var selectedExerciseIndex: Int? = nil
+    /// Used as a binding to show/hide the bottom sheet
     @State var showBottomSheet: Bool = false
     
     public init(workoutType: WorkoutType) {
@@ -51,7 +58,7 @@ struct PreviewWorkoutView: View {
             }
         }
         .onAppear {
-            generateWorkout(for: self.workoutType)
+            generateWorkout()
         }
         .confirmationDialog("Replace exercise", isPresented: $showBottomSheet, actions: {
             Button("Choose an exercise...") { /* TODO */ }
@@ -73,23 +80,23 @@ struct PreviewWorkoutView: View {
         }
     }
     
-    private func generateWorkout(for workout: WorkoutType) {
+    private func generateWorkout() {
         showLoading = true
         // ---- NOTE: Commented out for testing
 //        Task {
 //            do {
 //                //for each enum (one of each of the above muscles) in the pull workout structure, an exercise is added to the exercises array of the pull workout model.
 //                var exercises: [Exercise] = []
-//                for exercise in workout.structure {
+//                for exercise in self.workoutType.structure {
 //                    exercises.append(try await model.getExercisesFor(muscle: exercise.rawValue))
 //                }
-//                self.workout = Workout(type: workout, exercises: exercises)
+//                self.workout = Workout(type: self.workoutType, exercises: exercises)
 //            }
 //            catch {
 //                print("failed")
 //            }
 //        }
-        if let savedWorkouts = defaults.object(forKey: workoutType.rawValue) as? Data {
+        if let savedWorkouts = defaults.object(forKey: self.workoutType.rawValue) as? Data {
             if let loadedWorkout = try? decoder.decode(Workout.self, from: savedWorkouts) {
                 self.workout = loadedWorkout
                 showLoading = false
@@ -97,6 +104,9 @@ struct PreviewWorkoutView: View {
         }
     }
     
+    /// Generates a new exercise for the selected index and replaces the existing exercise
+    /// Uses the index to get the muscle type from `WorkoutType.structure`
+    /// Sets the state `workout` object to refresh the view after the exercise has been replaced
     private func generateNewExercise() {
         showLoading = true
         Task {
@@ -118,6 +128,7 @@ struct PreviewWorkoutView: View {
         }
     }
     
+    /// Saves the workout to the user's saved workouts in `UserDefaults`
     func saveWorkout(workout: Workout?, key: String) -> Void {
         guard let workout else { return }
         if let encoded = try? encoder.encode(workout) {
