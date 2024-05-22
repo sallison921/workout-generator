@@ -10,15 +10,9 @@ import Observation
 
 
 @Observable
-actor Model {
-    
+class Model {
+    static let workoutTypes: [WorkoutType] = [.pull, .push, .quad, .glute, .gluteHam]
      let session = URLSession.shared
-    var workoutList: [any Workout] = [PullWorkout(), PushWorkout(), GluteWorkout(), GluteHamWorkout(), QuadWorkout()]
-    var pullWorkout: PullWorkout = PullWorkout()
-    var pushWorkout: PushWorkout = PushWorkout()
-    var gluteWorkout: GluteWorkout = GluteWorkout()
-    var hamstringWorkout: GluteHamWorkout = GluteHamWorkout()
-    var quadWorkout: QuadWorkout = QuadWorkout()
     
         let headers = [
             "X-RapidAPI-Key": "096ae51849msh8370387b1025b38p14ecddjsn9b00b742e1b0",
@@ -78,56 +72,52 @@ struct Exercise: Codable, Hashable {
     var instructions: [String]?
 }
 
-
-
-/*
- 6 exercises
- - 1 lat pulldown
- - 1 bicep
- - 1 middle back
- - single arm back (add supserset later)
- - 1 bicep
- */
-struct PullWorkout: Workout {
-    var name = "Pull Workout"
-    var exercises: [Exercise] = []
-    var structure: [WorkoutAPIMuscle] = [.lats, .biceps, .upper_back, .biceps]
-}
-/*
-  6 exercises:
- - 2 bench press
- - 1 accessory fly
- - shoulder press
- - single arm shoulder
- - tricep
- - tricep
- */
-//WHATTT SHOULDER DOESNT EXIST
-struct PushWorkout: Workout {
-    var name = "Push Workout"
-    var exercises: [Exercise] = []
-    var structure: [WorkoutAPIMuscle] = [.pectorals, .pectorals, .delts, .triceps, .triceps]
-}
-struct QuadWorkout: Workout {
-    var name = "Quad Workout"
-    var exercises: [Exercise] = []
-    var structure: [WorkoutAPIMuscle] = [.quads, .quads, .glutes, .glutes]
-}
-struct GluteWorkout: Workout {
-    var name = "Glute Workout"
+class Workout: Codable {
+    let type: WorkoutType
+    var exercises: [Exercise]
     
-    var exercises: [Exercise] = []
-    var structure: [WorkoutAPIMuscle] = [.glutes, .glutes, .glutes, .glutes, .glutes]
+    public init(type: WorkoutType, exercises: [Exercise]) {
+        self.type = type
+        self.exercises = exercises
+    }
 }
-struct GluteHamWorkout: Workout {
-    var name: String = "Glute and Hams Workout"
-    var exercises: [Exercise] = []
-    var structure: [WorkoutAPIMuscle] = [.glutes, .glutes, .hamstrings, .hamstrings]
-}
-protocol Workout: Hashable, Codable, Encodable {
-    // Define anything in common between objects
-    // Example:
-    var exercises: [Exercise] { get set }
-    var name: String { get set }
-    var structure: [WorkoutAPIMuscle] { get set }
+
+enum WorkoutType: String, Codable {
+    case pull = "Pull"
+    case push = "Push"
+    case quad = "Quad"
+    case glute = "Glute"
+    case gluteHam = "Glute and Hams"
+    
+    var structure: [WorkoutAPIMuscle] {
+        switch self {
+        case .pull:
+            /*
+             6 exercises
+             - 1 lat pulldown
+             - 1 bicep
+             - 1 middle back
+             - single arm back (add supserset later)
+             - 1 bicep
+             */
+            [.lats, .biceps, .upper_back, .biceps]
+        case .push:
+            /*
+              6 exercises:
+             - 2 bench press
+             - 1 accessory fly
+             - shoulder press
+             - single arm shoulder
+             - tricep
+             - tricep
+             */
+            [.pectorals, .pectorals, .delts, .triceps, .triceps]
+        case .quad:
+            [.quads, .quads, .glutes, .glutes]
+        case .glute:
+            [.glutes, .glutes, .glutes, .glutes, .glutes]
+        case .gluteHam:
+            [.glutes, .glutes, .hamstrings, .hamstrings]
+        }
+    }
 }
