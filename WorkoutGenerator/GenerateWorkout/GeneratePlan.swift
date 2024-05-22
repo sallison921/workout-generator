@@ -11,9 +11,6 @@ import Foundation
 @MainActor
 struct GeneratePlan: View {
     @Environment(Model.self) var model
-    let encoder = JSONEncoder()
-    let defaults = UserDefaults.standard
-    
     @State var selectedType: WorkoutType = .pull
     
     var body: some View {
@@ -35,7 +32,7 @@ struct GeneratePlan: View {
     
     private func generateWorkoutButtonView(for workout: WorkoutType) -> some View {
         NavigationLink(
-            destination: { PreviewWorkoutView(workoutType: workout) },
+            destination: { PreviewWorkoutView(model: model, workoutType: workout) },
             label: {
                 Text(workout.rawValue)
                     .font(.title3)
