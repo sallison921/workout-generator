@@ -120,4 +120,14 @@ enum WorkoutType: String, Codable {
             [.glutes, .glutes, .hamstrings, .hamstrings]
         }
     }
+    
+    var imageName: String {
+        switch self {
+        case .pull: "pull"
+        case .push: "push"
+        case .quad: "quad"
+        case .glute: "glute"
+        case .gluteHam: "gluteham"
+        }
+    }
 }
