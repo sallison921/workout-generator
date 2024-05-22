@@ -8,6 +8,7 @@
 import SwiftUI
 import Observation
 
+
 @Observable
 class Model {
     static let workoutTypes: [WorkoutType] = [.pull, .push, .quad, .glute, .gluteHam]

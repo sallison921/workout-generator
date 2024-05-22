@@ -12,7 +12,7 @@ import Lottie
 /// View to show the proposed generated workout
 /// Allows a user to see the workout and replace exercises and/or save the workout to their list
 struct PreviewWorkoutView: View {
-    @ObservedObject private var viewModel: PreviewWorkoutViewModel
+    @State private var viewModel: PreviewWorkoutViewModel
     /// Indicates whether to show the loading animation overlay
     @State var showLoading: Bool = false
     /// Used as a binding to show/hide the bottom sheet
