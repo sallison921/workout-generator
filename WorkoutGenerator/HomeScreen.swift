@@ -12,7 +12,7 @@ struct HomeScreen: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            GeneratePlan()
+            GeneratePlan(selectedTab: $selectedTab)
                 .tabItem {
                     Label("Generate", systemImage: "paintpalette.fill")
                 }

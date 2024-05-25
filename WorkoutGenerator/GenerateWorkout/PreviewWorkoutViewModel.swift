@@ -22,6 +22,7 @@ class PreviewWorkoutViewModel {
     /// Indicates which exercise the user is editing
     var selectedExerciseIndex: Int? = nil
     
+    
     public init(model: Model, workoutType: WorkoutType) {
         self.model = model
         self.workoutType = workoutType
@@ -75,10 +76,12 @@ class PreviewWorkoutViewModel {
     }
     
     /// Saves the workout to the user's saved workouts in `UserDefaults`
-    func saveWorkout() -> Void {
+    func saveWorkout(_ onSuccess: (() -> Void)? = nil) -> Void {
         guard let workout else { return }
         if let encoded = try? encoder.encode(workout) {
             defaults.set(encoded, forKey: workoutType.rawValue)
+            onSuccess?()
+            
         } else {
             print("no")
         }
