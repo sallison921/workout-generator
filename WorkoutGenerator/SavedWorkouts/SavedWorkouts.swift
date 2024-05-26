@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import AVKit
 struct SavedWorkouts: View {
     @Environment(Model.self) private var model
     @State var workouts: [WorkoutType: [Exercise]] = [:]
@@ -14,18 +14,25 @@ struct SavedWorkouts: View {
     let decoder = JSONDecoder()
     
     var body: some View {
-        List(Array(workouts.keys), id: \.self) { workoutType in
-            Section("\(workoutType.rawValue) Workout"){
-                ForEach(workouts[workoutType] ?? [], id: \.self){ item in
-                    Text(item.name ?? "none")
+ 
+        NavigationStack {
+            List(Array(workouts.keys), id: \.self) { workoutType in
+                Section("\(workoutType.rawValue) Workout"){
+                    ForEach(workouts[workoutType] ?? [], id: \.self){ item in
+                        NavigationLink(item.name ?? "none", value: item)
+                    }
                 }
             }
-        }
-        .refreshable {
-            Model.workoutTypes.map { findWorkout(for: $0) }
-        }
-        .onAppear {
-            Model.workoutTypes.map { findWorkout(for: $0) }
+            .refreshable {
+                Model.workoutTypes.map { findWorkout(for: $0) }
+            }
+            .onAppear {
+                Model.workoutTypes.map { findWorkout(for: $0) }
+            }
+            .navigationDestination(for: Exercise.self) { exercise in
+                // Shows the GIF and the name. TODO: add instructions
+                GIFView(exercise: exercise)
+            }
         }
     }
     
