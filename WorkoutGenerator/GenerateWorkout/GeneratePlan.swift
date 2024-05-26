@@ -12,7 +12,7 @@ import Foundation
 struct GeneratePlan: View {
     @Environment(Model.self) var model
     @State var selectedType: WorkoutType = .pull
-    
+    @Binding var selectedTab: Int
     var body: some View {
         NavigationStack {
             VStack {
@@ -32,7 +32,7 @@ struct GeneratePlan: View {
     
     private func generateWorkoutButtonView(for workout: WorkoutType) -> some View {
         NavigationLink(
-            destination: { PreviewWorkoutView(model: model, workoutType: workout) },
+            destination: { PreviewWorkoutView(model: model, workoutType: workout, selectedTab: $selectedTab) },
             label: {
                 Text(workout.rawValue)
                     .font(.title3)
@@ -61,6 +61,6 @@ struct GeneratePlan: View {
 }
 
 #Preview {
-    GeneratePlan()
+    GeneratePlan(selectedTab: .constant(0))
         .environment(Model())
 }

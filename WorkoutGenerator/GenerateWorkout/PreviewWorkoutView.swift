@@ -18,8 +18,11 @@ struct PreviewWorkoutView: View {
     /// Used as a binding to show/hide the bottom sheet
     @State var showBottomSheet: Bool = false
     
-    public init(model: Model, workoutType: WorkoutType) {
+    /// Indicates which tab is currently selected
+    @Binding var selectedTab: Int
+    public init(model: Model, workoutType: WorkoutType, selectedTab: Binding<Int>) {
         self.viewModel = PreviewWorkoutViewModel(model: model, workoutType: workoutType)
+        self._selectedTab = selectedTab
     }
     
     var body: some View {
@@ -27,24 +30,42 @@ struct PreviewWorkoutView: View {
             Text("Preview \(viewModel.workoutType.rawValue) Workout")
                 .font(.title)
             Spacer()
-            if let workout = viewModel.workout {
-                List(Array(workout.exercises.enumerated()), id: \.element.id) { index, exercise in
-                    HStack {
-                        Text(exercise.name ?? "exercise")
-                        Spacer()
-                        Image(systemName: "ellipsis")
-                            .onTapGesture {
-                                viewModel.selectedExerciseIndex = index
-                                showBottomSheet = true
-                            }
+            ZStack(alignment: .bottom) {
+                if let workout = viewModel.workout {
+                    List(Array(workout.exercises.enumerated()), id: \.element.id) { index, exercise in
+                        HStack {
+                            Text(exercise.name ?? "exercise")
+                            Spacer()
+                            Image(systemName: "ellipsis")
+                                .onTapGesture {
+                                    viewModel.selectedExerciseIndex = index
+                                    showBottomSheet = true
+                                }
+                        }
                     }
+                    
                 }
+                Button {
+                    viewModel.saveWorkout {
+                        // Move to the saved workouts tab on save
+                        selectedTab = 1
+                    }
+                } label: {
+                    RoundedRectangle(cornerRadius: 20)
+                        .overlay {
+                            Text("Save workout")
+                                .foregroundStyle(.white)
+                        }
+                        .frame(width: 300, height: 50)
+                    
+                }
+                .padding()
             }
+            
             Spacer()
-            Button("Save") {
-                viewModel.saveWorkout()
-            }
         }
+        
+//        .background(.gray)
         .onAppear {
             generateWorkout()
         }
@@ -73,6 +94,7 @@ struct PreviewWorkoutView: View {
         showLoading = true
         viewModel.generateWorkout() {
             showLoading = false
+            
         }
     }
     
