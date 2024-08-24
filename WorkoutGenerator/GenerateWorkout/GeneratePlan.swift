@@ -16,8 +16,9 @@ struct GeneratePlan: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Generate a workout")
+                Text("Create your own workout!")
                     .font(.title)
+                    .foregroundColor(.pink)
                 ScrollView {
                     VStack(spacing: 32) {
                         ForEach(Model.workoutTypes, id: \.self) { workoutType in
