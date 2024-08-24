@@ -24,10 +24,10 @@ struct SavedWorkouts: View {
                 }
             }
             .refreshable {
-                Model.workoutTypes.map { findWorkout(for: $0) }
+                Model.workoutTypes.forEach { findWorkout(for: $0) }
             }
             .onAppear {
-                Model.workoutTypes.map { findWorkout(for: $0) }
+                Model.workoutTypes.forEach { findWorkout(for: $0) }
             }
             .navigationDestination(for: Exercise.self) { exercise in
                 // Shows the GIF and the name. TODO: add instructions
